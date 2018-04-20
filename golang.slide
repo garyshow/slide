@@ -1,4 +1,3 @@
-
 GopherChina 2018
         ------------------------------ 我所收获到的
 
@@ -16,8 +15,21 @@ xingcuntian@sensetime.com
 
 - 区块链(以太坊,INBlockChina,小蚁NEO)
 
-- 游戏（真有趣）
+* Go优势
+- 优秀的系统编程能力[syscall]
+.image images/one.jpg
 
+* Go优势
+- 对C语言开发者友好
+  a.语法语义：比较接近
+  b.功能性：都提供操作系统底层的功能
+  c.高级语言特性：
+      相对C语言，GO提供的高级特性比较少
+      在语言层面提供了channel,goroutine等实用性功能
+  d.Go语言的标准库比较齐全
+  e.操作性
+     Go语言可以方便的调用已有的C库
+     Go语言可以方便实用gdb
 * 云计算
 
 - cgo 支持
@@ -89,10 +101,10 @@ xingcuntian@sensetime.com
 - Grab NearBy 服务改造
 
  1.Node.js + PostGIS (R+Tree 写性能低,可用性低)
-           |
  2.golang  + redis
 
-
+- 提到的算法方面
+ 1.R+Tree 2.B+Tree 3.LSM+Tree
 
 * 区块链
 - 什么是区块链(Blockchain)
@@ -109,16 +121,69 @@ xingcuntian@sensetime.com
   自下而上数据层，网络层，共识层，激励层，合约层和应用层
 
 * 区块链
+  - 共识容错机制
+   1.崩溃故障容错（CFT） ；
+   2.拜占庭容错（BFT）；
+  - 共识算法类型
+   1.基于彩票中奖的算法
+      节点可扩展性：好
+      交易确定性：大概率一致的共识机制
+      交易完成速度：快
+      共识网络流量：少
+      共识算法特点：先记账再共识
+      典型算法实例：PoW（工作量证明），PoET（消逝时间量证明算法）
+   2.基于投票计数的算法
+      节点可扩展性：一般
+      交易确定性：绝对一致的共识机制
+      交易完成速度：慢
+      共识网络流量：多
+      共识算法特点：先共识后记账
+      典型算法实例：RBFT(冗余拜占庭容错算法)，Paxos
+   3.Gossip协议
+      P2P数据分发
+
+* 区块链
+- 智能合约及区块链划分
   1）智能合约：当一个预先编好的条件被触发时，执行相应的合同条款
   2）适用场景：公有链(比特币，以太坊，瑞波)，私有链(以太坊，瑞波)，联盟链(以太坊，瑞波)三种
-
-* Fin Tech2.0 三驾马车：区块链，认知物联网，人工智能
-
-
+- 区块链系统的模块
+.image images/bs.jpg
 - 主流智能合约的开发语言Solidity，Java，C/C#，Go
+- FinTech2.0（金融科技时代） 三驾马车：区块链，认知物联网，人工智能
 
+* 涉及到开源项目
+- 数据库操作辅助工具(连接池管理，SQL构建工具，结构映射工具)
+  github.com/didi/gendry
+- 兼容原生API的JSON编解码工具
+  github.com/json-iterator/go
+- 阿里巴巴开源一种高效的企业级富集容器引擎
+  github.com/alibaba/pouch
 
-* Go2.0将会有哪些新特征及未来的前景
+* 截图
+.image images/dd1.jpeg
+
+* 截图
+.image images/dd2.jpg
+
+* 截图
+.image images/alibaba1.jpg
+
+* 截图
+.image images/alibaba2.jpg
+
+* 截图
+.image images/alibaba3.jpg
+
+* 截图
+.image images/arm1.jpg
+
+* 对Go未来的一些期待
+.image images/qd.jpg
+
+* 对Go未来的一些期待
+.image images/qd2.jpeg
+
+* 对Go未来的一些期待
 
 - 友好的错误处理
  a.类似 try....catch
@@ -135,4 +200,4 @@ xingcuntian@sensetime.com
 
 - 工具
  a. 第三方库管理(很欠缺，类似meven)
- b. 中间堆栈内联 编译器(compile)  C(clang,gcc,g++)
+ b. 中间堆栈内联 编译器(compile)  C(clang,gcc,g++) java(javac)
