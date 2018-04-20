@@ -1,1 +1,138 @@
 
+GopherChina 2018
+        ------------------------------ 我所收获到的
+
+SenseTime
+xingcuntian
+xingcuntian@sensetime.com
+
+* Golang使用目前涉及哪些领域
+
+- 云计算 (青云,七牛云)
+
+- 微服务（罗辑思维,bilibili)
+
+- 出行服务（滴滴，Grab）
+
+- 区块链(以太坊,INBlockChina,小蚁NEO)
+
+- 游戏（真有趣）
+
+* 云计算
+
+- cgo 支持
+
+ package main
+
+ //extern void SayHello(char* s);
+ import "C"
+ import "fmt"
+
+ func main() {
+   C.SayHello(C.CString("Hello, World\n"))
+ }
+
+ //export SayHello
+ func SayHello(s *C.char) {
+   fmt.Print(C.GoString(s))
+ }
+
+- CGO生成的中间文件过程及调用过程
+  1> main.go -> main.cgo1.go/main.cgo2.c -> _cgo_gotypes.go -> _cgo_export.h/_cgo_export.c
+  2> C.SayHello => _Cfunc_SayHello => runtime.cgocall => newthread: SayHello
+* 云计算
+
+- cgo 改进
+
+ // +build go1.10
+ package main
+
+ // extern void SayHello(_GoString_ s);
+ import "C"
+ import "fmt"
+
+ func main() {
+ 	C.SayHello("hello world\n")
+ }
+
+ //export SayHello
+ func SayHello(s string) {
+ 	fmt.Print(s)
+ }
+
+ - 调用过程
+   1> main.go => main.cgo1.go => _cgo_gotypes.go=>
+      _cgo_runtime_cgocall => main.cgo2.c => _cgo_export.c
+
+* 微服务
+- 逻辑思维微服务改造
+  1. PHP 到 Golang 改造遇到的问题
+    a.弱类型 数据类型转换？array ====> map []type  [int]type
+    b.怎么无缝切换接口
+    c.如何测试？旁路测试
+  2. 使用中间件 consul/etcd, kafka/zookeeper; APIGateway
+  3. 多级缓存
+- bilibili 微服务
+  1.主要使用GRPC或者RPC服务提供服务
+
+
+* 出行服务
+- 滴滴遇到的问题
+ 1.DiRPC  dirpcgen 兼容thrift IDL语法的IDL
+
+ 2.遇到的问题WaitGroup导致服务异常 double close
+
+ 3.GC 小对象过多引起的服务吞吐问题（现象流量大，请求超时增多；耗时严重；总体内存变化不大）
+
+  对象数量过多，导致GC三色算法耗费较多CPU，优化 对象 string map[key]value ,slice, *Type
+
+- Grab NearBy 服务改造
+
+ 1.Node.js + PostGIS (R+Tree 写性能低,可用性低)
+           |
+ 2.golang  + redis
+
+
+
+* 区块链
+- 什么是区块链(Blockchain)
+  目前还缺乏统一的规范和标准。Wikipedia 给出的定义为：区块链技术让参与在系统中的任意多个节点，
+  通过密码学算法把一段时间系统内的全部信息交流数据计算和记录到一个数据块(Block)中，并且生成该
+  数据块的指纹用于链接下个数据块和校验，系统中所有的参与节点共同认定记录是否为真。
+- 区块链本质
+  由多方参与共同维护的一个持续增长的分布式数据库，即 共享账本，其核心在于通过分布式网络，
+  时序不可篡改的密码学账本及分布式共识机制建立彼此之间的信任关系，利用由自动化脚本做成的
+  智能合约来编程和操作数据，最终实现由信息互联向价值互联的进化。
+- 区块链技术特点
+  分布式结构，信任机制，公开透明，时序不可篡改
+- 区块链技术层次模型
+  自下而上数据层，网络层，共识层，激励层，合约层和应用层
+
+* 区块链
+  1）智能合约：当一个预先编好的条件被触发时，执行相应的合同条款
+  2）适用场景：公有链(比特币，以太坊，瑞波)，私有链(以太坊，瑞波)，联盟链(以太坊，瑞波)三种
+
+* Fin Tech2.0 三驾马车：区块链，认知物联网，人工智能
+
+
+- 主流智能合约的开发语言Solidity，Java，C/C#，Go
+
+
+* Go2.0将会有哪些新特征及未来的前景
+
+- 友好的错误处理
+ a.类似 try....catch
+ b.减少 if err != nil
+
+- 数据类型方面
+ a.golang2.0版本后将会支持泛型
+ c.无处不在的安全点
+
+- 夸平台
+ a. WebAssembly体系结构 Go 语言宣布加入 WASM！WebAssembly
+ b. 基于注册的调用约定
+ c. 函数调用约定(x86、x64、arm、arm64)
+
+- 工具
+ a. 第三方库管理(很欠缺，类似meven)
+ b. 中间堆栈内联 编译器(compile)  C(clang,gcc,g++)
